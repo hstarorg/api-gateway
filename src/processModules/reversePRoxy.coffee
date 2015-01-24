@@ -3,12 +3,11 @@ request = require('request')
 exports.name = 'Reverse Proxy'
 
 exports.action = (req, res, callback) ->
-  console.log(exports.name )
   options = {
     method: req.method.toLowerCase()
     headers: req.headers
     uri: 'http://localhost:3001/api/get'
-    timeout: 3*60*1000
+    timeout: 5*1000
   }
   resData = []
   resLength = 0
