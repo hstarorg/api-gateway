@@ -1,5 +1,7 @@
 #Custom
 .idea/
+dist/
+node_modules/
 
 # Logs
 logs
