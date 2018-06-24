@@ -8,7 +8,9 @@ module.exports = {
     const forwardInfo = ctx.state.$$gateway.forwardInfo;
     await new Promise(resovle => {
       request(`http://${forwardInfo.host}/${forwardInfo.path}`, function(err, res, body) {
-        ctx.body = body;
+        if (err) {
+          ctx.body = err.message;
+        }
         resovle();
       });
     });
