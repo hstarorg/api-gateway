@@ -1,3 +1,5 @@
+const uuid = require('uuid');
+
 module.exports = {
   /**
    * Is function.
@@ -15,5 +17,9 @@ module.exports = {
   ensureNumber(n, defaultValue = 0) {
     n = +n;
     return n !== n ? defaultValue : n;
+  },
+
+  uuidV4() {
+    return uuid.v4();
   }
 };

@@ -1,8 +1,12 @@
 module.exports = {
-  priority: 0,
+  priority: 10,
   name: 'global-error-handler',
   description: '',
   handler: async (ctx, next) => {
-    ctx.body = 'Hello';
+    try {
+      await next();
+    } catch (e) {
+      ctx.throw(e, e.status || 500);
+    }
   }
 };
