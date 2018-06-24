@@ -3,12 +3,16 @@ const Koa = require('koa');
 
 const config = require('./config');
 const app = new Koa();
+const middlewares = require('./middlewares');
 
-app.use(async ctx => {
+app.use(async (ctx, next) => {
   if (ctx.path === '/') {
-    ctx.body = '<h1 style="text-align:center;">Welcome to API-Gateway!</h1><hr />';
+    return (ctx.body = '<h1 style="text-align:center;">Welcome to API-Gateway!</h1><hr />');
   }
+  await next();
 });
+
+middlewares.attach(app);
 
 const server = http.createServer(app.callback());
 server
