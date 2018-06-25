@@ -1,4 +1,11 @@
 const request = require('request');
+const { Writable, Readable, PassThrough } = require('stream');
+
+function _setResponseTime(ctx) {
+  const endAt = process.uptime();
+  const diffMs = (endAt - ctx.state.$$gateway.startAt) * 1000;
+  ctx.set('X-Response-Time', `${diffMs.toFixed(2)}ms`);
+}
 
 module.exports = {
   priority: 25,
@@ -28,9 +35,13 @@ module.exports = {
       });
     }
     await new Promise(resolve => {
-      proxyReq.pipe(ctx.res);
+      proxyReq.pipe(
+        ctx.res,
+        { end: true }
+      );
       // 处理错误
       proxyReq.on('error', err => {
+        ctx.status = 503;
         ctx.body = err.message;
         resolve();
       });
@@ -49,7 +60,6 @@ module.exports = {
         if (resData.length > 0) {
           ctx.state.$$gateway.responseData = Buffer.concat(resData, resLength).toString();
         }
-        console.log(ctx.state.$$gateway.responseData, ctx.state.$$gateway.responseHeaders);
         resolve();
       });
     });

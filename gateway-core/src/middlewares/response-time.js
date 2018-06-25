@@ -4,9 +4,13 @@ module.exports = {
   description: '',
   handler: async (ctx, next) => {
     const startAt = process.uptime();
+    ctx.state.$$gateway.startAt = startAt;
     await next();
     const endAt = process.uptime();
     const diffMs = (endAt - startAt) * 1000;
-    ctx.set('X-Response-Time', `${diffMs}ms`);
+    const diffMsStr = `${diffMs.toFixed(2)}ms`;
+    // ctx.set('X-Response-Time', diffMsStr);
+    // ctx.res.end();
+    console.log('res-end', diffMsStr);
   }
 };
