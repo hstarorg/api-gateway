@@ -18,7 +18,7 @@ const server = http.createServer(app.callback());
 server
   .listen(config.port, () => {
     const addr = server.address();
-    console.log(`Gateway started... listening port ${addr.port}`);
+    console.log(`Gateway started...`, addr);
   })
   .on('error', err => {
     console.error(err);

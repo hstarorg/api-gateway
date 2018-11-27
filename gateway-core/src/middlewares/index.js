@@ -13,6 +13,10 @@ module.exports = {
     });
     return middlewareNameList;
   },
+  /**
+   * Attach middlewares on app.
+   * @param {*} app
+   */
   attach(app) {
     const mList = this._getMiddlewareList();
 
